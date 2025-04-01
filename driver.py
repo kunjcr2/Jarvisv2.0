@@ -1,0 +1,2 @@
+import Voice
+Voice.speak()
