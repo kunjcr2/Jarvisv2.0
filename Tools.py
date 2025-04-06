@@ -50,7 +50,7 @@ def get_llm():
     try:
         llm = ChatOpenAI(
             api_key=api_key,
-            model="gpt-4o-mini"
+            model="gpt-3.5-turbo"
         )
         return llm
     except Exception as e:
