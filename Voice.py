@@ -7,49 +7,41 @@ engine = pyttsx3.init()
 recognizer = sr.Recognizer()
 tool = ToolManager()
 
-# for 
-def for_max():
-    while True:
-        print("Listening...")
-        with sr.Microphone() as source:
-            audio = recognizer.listen(source)
+def wait_for_max():
+    """Silently listens for 'max' before activating the agent."""
+    with sr.Microphone() as source:
+        print("Initializing...")
+        while True:
             try:
+                audio = recognizer.listen(source, timeout=None)  # No console output
                 user_input = recognizer.recognize_google(audio).lower()
                 if "max" in user_input:
-                    print("Max is here! How can I help you today?")
                     engine.say("Max is here! How can I help you today?")
                     engine.runAndWait()
-                    return
-                else:
-                    continue
-            except sr.UnknownValueError:
-                print("Sorry, I did not understand.")
-            except sr.RequestError:
-                print("Service is down.")
+                    return 
+            except (sr.UnknownValueError, sr.RequestError):
+                pass
 
-# for listening and speaking
-def for_agent():
+def command_mode():
+    """Handles commands until 'stop' is detected."""
     agent = Agent.get_agent()
-    while True:
-        tool.__init__()
-        print("Listening for command...")
-        with sr.Microphone() as source:
-            audio = recognizer.listen(source)
+    with sr.Microphone() as source:
+        while True:
             try:
+                audio = recognizer.listen(source, timeout=None)
                 user_input = recognizer.recognize_google(audio)
                 if "stop" in user_input.lower():
                     engine.say("Okay, you have a good day")
                     engine.runAndWait()
                     break
-                else:
-                    res = agent.run(user_input)
-                    engine.say(res)
-                    engine.runAndWait()
-            except sr.UnknownValueError:
-                print("Sorry, I did not understand.")
-            except sr.RequestError:
-                print("Service is down.")
+                res = agent.run(user_input)
+                engine.say(res)
+                engine.runAndWait()
+            except (sr.UnknownValueError, sr.RequestError):
+                pass  # Fail silently
 
 def speak():
-    # for_max()
-    for_agent()
+    """Main loop: Waits for 'max', then processes commands until 'stop'."""
+    while True:
+        wait_for_max()
+        command_mode()

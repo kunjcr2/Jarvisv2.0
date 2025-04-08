@@ -157,14 +157,12 @@ def add_google_calendar_reminder(query):
 
 ####################################################################################################################
 
-###############################################---Tools---###############################################################
+###############################################---Google Tool---###############################################################
 # For getting the tools and using google ONCE
 class ToolManager:
     def __init__(self):
         self.google_used = False
         self.web_used = False
-
-    # These are the tools here
     def get_tools(self):
         wiki_tool = Tool(
             name="Wikipedia", 
@@ -217,14 +215,11 @@ class ToolManager:
             email_tool,
             reminder_tool,
         ]
-
-    # This is the function to use google
     def use_google(self, query):
         if self.google_used:
             return "Google search already used in this query."
         self.google_used = True
         return google_search(query)
-    
     def use_web(self, query):
         if self.web_used:
             return "Google search already used in this query."
