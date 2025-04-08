@@ -39,23 +39,6 @@ def google_search(query):
     '''
     res = kit.search(query)
     return res
-def get_llm():
-    '''
-    LLM
-    '''
-    api_key = os.getenv('OPENAI_API_KEY')
-    if not api_key:
-        raise ValueError("OPENAI_API_KEY not found in environment variables")
-    
-    try:
-        llm = ChatOpenAI(
-            api_key=api_key,
-            model="gpt-3.5-turbo"
-        )
-        return llm
-    except Exception as e:
-        print(f"Error initializing ChatOpenAI: {str(e)}")
-        raise
 def get_yt(query):
     search = VideosSearch(query, limit = 1)
     results = search.result()
@@ -222,12 +205,6 @@ class ToolManager:
             name="Reminder",
             description="Create a reminder in Google Calendar using a simple format: 'title, date (YYYY-MM-DD), time (HH:MM), description, duration (minutes)'. Only title is required.",
             func=add_google_calendar_reminder
-        )
-
-        llm_tool = Tool(
-            name="OpenAI",
-            description="Answers questions when Wikipedia lacks information. Use sparingly.",
-            func=get_llm().invoke
         )
         
         return [
