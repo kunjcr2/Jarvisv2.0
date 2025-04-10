@@ -68,8 +68,8 @@ def send_email(dict):
     subject = dict["subject"]
     body = dict["body"]
 
-    EMAIL = os.getenv('EMAIL_ADDRESS')
-    PASSWORD = os.getenv('EMAIL_PASSWORD')
+    EMAIL = os.getenv("EMAIL")
+    PASSWORD = os.getenv("PASSWORD")
 
     msg = MIMEMultipart()
     msg["From"] = EMAIL
@@ -196,7 +196,7 @@ class ToolManager:
         )
         email_tool = Tool(
             name="Email",
-            description="Use ONLY for sending professional emails to a specific email address and return stricly in dictionary format 'subject', 'body' and you can use \\n.",
+            description="Use ONLY for sending professional emails of MORE THAN ONE LINE to a specific email address and return stricly in dictionary format 'subject', 'body' and you can use \\n.",
             func=send_email
         )
         reminder_tool = Tool(
