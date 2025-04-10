@@ -59,5 +59,5 @@ def command_mode():
 
 def speak():
     """Main loop: Waits for 'max', then processes commands until 'stop'."""
-    wait_for_max()
+    # wait_for_max()
     command_mode()
