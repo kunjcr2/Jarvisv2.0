@@ -17,6 +17,10 @@ import ast
 import urllib.parse
 from datetime import datetime, timedelta
 
+# opencv
+import cv2
+import random
+
 # Environment variables
 import os
 from dotenv import load_dotenv
@@ -104,19 +108,15 @@ def add_google_calendar_reminder(query):
         dict: Result information
     """
     try:
-        # Parse the query string
         parts = query.split(",") + [""] * (5 - len(query.split(",")))
         title = parts[0].strip()
         
-        # Get date (default: today)
         date_str = parts[1].strip() or datetime.now().strftime("%Y-%m-%d")
         date_obj = datetime.strptime(date_str, "%Y-%m-%d")
         
-        # Get time (default: current time)
         time_str = parts[2].strip() or datetime.now().strftime("%H:%M")
         hour, minute = map(int, time_str.split(":"))
         
-        # Create datetime object
         event_time = datetime(
             date_obj.year, date_obj.month, date_obj.day, hour, minute
         )
@@ -124,7 +124,7 @@ def add_google_calendar_reminder(query):
         # Get description and duration
         description = parts[3].strip()
         duration = int(parts[4]) if parts[4].strip() else 60
-        
+
         # Format times for Google Calendar
         start_time = event_time.strftime("%Y%m%dT%H%M%S")
         end_time = (event_time + timedelta(minutes=duration)).strftime("%Y%m%dT%H%M%S")
@@ -154,6 +154,34 @@ def add_google_calendar_reminder(query):
         
     except Exception as e:
         return {"success": False, "error": str(e)}
+def get_pic(bool):
+    if bool:
+        img_dir = os.path.join(".", "image")
+    
+        if not os.path.exists(img_dir):
+            os.makedirs(img_dir)
+
+        camera = cv2.VideoCapture(0)
+        if not camera.isOpened():
+            return "Error: Could not open camera."
+
+        ret, frame = camera.read()
+        if not ret:
+            camera.release()
+            return "Error: Could not read frame."
+        
+        while True:
+            img_name = f'img{random.randint(1,1000)}.jpg'
+            img_path = os.path.join(img_dir, img_name)
+            if not os.path.exists(img_path):
+                break
+
+        cv2.imwrite(img_path, frame)
+        camera.release()
+
+        return "Taken a picture successfully."
+    else:
+        return "Camera is not opened."
 
 ####################################################################################################################
 
@@ -204,6 +232,11 @@ class ToolManager:
             description="Create a reminder in Google Calendar using a simple format: 'title, date (YYYY-MM-DD), time (HH:MM), description, duration (minutes)'. Only title is required.",
             func=add_google_calendar_reminder
         )
+        camera_tool = Tool(
+            name="Camera",
+            description="Use ONLY for taking a picture, return True or False.",
+            func=get_pic
+        )
         
         return [
             wiki_tool, 
@@ -214,6 +247,7 @@ class ToolManager:
             weather_tool,
             email_tool,
             reminder_tool,
+            camera_tool
         ]
     def use_google(self, query):
         if self.google_used:
