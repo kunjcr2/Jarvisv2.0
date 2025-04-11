@@ -17,10 +17,13 @@ Jarvis v2.0 is an intelligent voice assistant that uses speech recognition and t
 ## Project Structure
 
 - `driver.py`: Main entry point of the application
-- `Voice.py`: Handles voice recognition and text-to-speech functionality
-- `Tools.py`: Contains various tools and utilities for task execution
-- `Agent.py`: Manages the AI agent that processes commands
-- `.env`: Configuration file for environment variables
+- `src/`
+  - `Agent.py`: Manages the AI agent that processes commands, now updated to include better modularity and error handling.
+  - `llm.py`: Handles interactions with the language model, updated for improved API integration.
+  - `test.py`: Contains test cases for validating the functionality of various modules.
+  - `Tools.py`: Contains various tools and utilities for task execution, updated for better tool management.
+  - `Voice.py`: Handles voice recognition and text-to-speech functionality, updated for enhanced user interaction.
+  - `__pycache__/`: Stores compiled Python files for faster execution.
 
 ## Prerequisites
 
@@ -45,7 +48,13 @@ cd Jarvisv2.0
 pip install -r requirements.txt
 ```
 
-3. Set up your environment variables in the `.env` file
+3. Set up your environment variables in the `.env` file:
+
+```
+EMAIL="your_email"                        # for email where you want geenrated emails to go
+PASSWORD="your_temporary_google_password" # Contact me for this, it is called "passkey"
+OPENAI_API_KEY="your_openai_api_key"      # Contact me for help
+```
 
 ## Usage
 
@@ -58,6 +67,14 @@ python driver.py
 2. Wait for the wake word "Max" or start speaking commands directly
 3. Speak your command clearly
 4. Say "stop" to end the session
+
+## Recent Updates
+
+- Added `src.` prefix to all imports for better module resolution.
+- Improved error handling and modularity across all files in the `src` folder.
+- Enhanced the voice recognition and command processing logic in `Voice.py`.
+- Updated `Agent.py` to include a more robust agent initialization process.
+- Refactored `Tools.py` for better tool management and extensibility.
 
 ## Contributing
 
