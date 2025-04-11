@@ -3,10 +3,13 @@ import pyttsx3
 from src.Tools import ToolManager
 import src.Agent as Agent
 
+from src.Context import Context
+
 engine = pyttsx3.init()
 recognizer = sr.Recognizer()
 recognizer.pause_threshold = 2
 tool = ToolManager()
+ctx = Context()
 
 def wait_for_max():
     """Silently listens for 'max' before activating the agent."""
@@ -27,7 +30,7 @@ def command_mode():
     """Handles commands until 'stop' is detected. Only processes commands starting with 'max'."""
     agent = Agent.get_agent()
     with sr.Microphone() as source:
-        recognizer.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient noise
+        recognizer.adjust_for_ambient_noise(source, duration=1)
         while True:
             print("Listening...")
             try:
@@ -46,15 +49,24 @@ def command_mode():
 
                     max_index = user_input_lower.find("max")
                     actual_command = user_input[max_index + 3:].strip()
+                    command_with_context = ""
                     
-                    if actual_command:
-                        print("Processing command:", actual_command)
-                        res = agent.run(actual_command)
+                    if actual_command.strip().startswith(("and", "but", "what about", "how about")):
+                        command_with_context = f"last command was {ctx.get_context()}, answer ONLY {actual_command}"
+                        actual_command = ""
+                    
+                    command = command_with_context or actual_command
+                    if command:
+                        print("Processing command:", command)
+                        res = agent.run(command)
+                        ctx.add_context(command)
                         engine.say(res)
                         engine.runAndWait()
                     else:
                         engine.say("I didn't hear a command after max")
                         engine.runAndWait()
+                else:
+                    print("Did not find max") ###
             except Exception as e:
                 pass
 
