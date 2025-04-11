@@ -76,6 +76,18 @@ python driver.py
 - Updated `Agent.py` to include a more robust agent initialization process.
 - Refactored `Tools.py` for better tool management and extensibility.
 
+## Tools Available
+
+- **Wikipedia Tool**: Fetches a brief summary from Wikipedia for a given query.
+- **Google Search Tool**: Performs a Google search for real-time or media-related queries. Can only be used once per query.
+- **YouTube Tool**: Streams media on YouTube and returns the title of the searched content.
+- **Google Maps Tool**: Opens Google Maps for directions or location searches.
+- **Web Search Tool**: Opens specific websites and returns the name of the site.
+- **Weather Tool**: Provides the current weather for a specified location.
+- **Email Tool**: Sends professional emails with a subject and body. Requires dictionary input with 'subject' and 'body'.
+- **Reminder Tool**: Creates a Google Calendar reminder using a simple format: 'title, date (YYYY-MM-DD), time (HH:MM), description, duration (minutes)'. Only the title is required.
+- **General LLM Fallback**: If the agent fails to find a solution using the available tools, it falls back to a default Language Learning Model (LLM) to process the query and provide a response.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
