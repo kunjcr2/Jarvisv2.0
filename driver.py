@@ -1,2 +1,2 @@
-import Voice
-Voice.speak()
+from src.Voice import speak
+speak()
