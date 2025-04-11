@@ -15,7 +15,7 @@ def get_llm(api_key):
     try:
         llm = ChatOpenAI(
             api_key=api_key,
-            model="gpt-4o-mini"
+            model="gpt-4o-mini",
         )
         return llm
     except Exception as e:

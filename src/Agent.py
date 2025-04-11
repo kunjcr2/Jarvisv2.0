@@ -10,7 +10,7 @@ tool = Tools.ToolManager()
 def get_agent():
     agent = initialize_agent(
         tools=tool.get_tools(),
-        llm=get_llm(api_key=os.getenv('OPENAI_API_KEY')),
+        llm=get_llm(api_key=os.environ.get('OPENAI_API_KEY')),
         agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
         agent_name="pie-assistant",
         verbose=True,

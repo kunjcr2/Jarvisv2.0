@@ -5,6 +5,7 @@ import src.Agent as Agent
 
 engine = pyttsx3.init()
 recognizer = sr.Recognizer()
+recognizer.pause_threshold = 2
 tool = ToolManager()
 
 def wait_for_max():
