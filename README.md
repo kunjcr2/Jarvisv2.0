@@ -14,12 +14,19 @@ Jarvis v2.0 is an intelligent voice assistant that uses speech recognition and t
 - Agent-based architecture for processing commands
 - Wake word detection ("Max")
 
+## Updated Features
+
+- **Memory Integration**: The agent now retains the last command using a memory buffer for improved context handling.
+- **Enhanced Context Management**: The `Context.py` module has been updated to provide better context handling for commands.
+- **Improved Tool System**: The `Tools.py` module now supports a wider range of tools with better extensibility.
+
 ## Project Structure
 
 - `driver.py`: Main entry point of the application
 - `src/`
   - `Agent.py`: Manages the AI agent that processes commands, now updated to include better modularity and error handling.
-  - `llm.py`: Handles interactions with the language model, updated for improved API integration.
+  - `Context.py`: Manages context for commands, updated for better context resolution.
+  - `llm.py`: Handles interactions with the language model, updated for improved API integration and now includes memory integration for retaining the last command.
   - `test.py`: Contains test cases for validating the functionality of various modules.
   - `Tools.py`: Contains various tools and utilities for task execution, updated for better tool management.
   - `Voice.py`: Handles voice recognition and text-to-speech functionality, updated for enhanced user interaction.
@@ -31,6 +38,8 @@ Jarvis v2.0 is an intelligent voice assistant that uses speech recognition and t
 - Required Python packages:
   - speech_recognition
   - pyttsx3
+  - langchain
+  - python-dotenv
   - (other dependencies will be listed in requirements.txt)
 
 ## Installation
@@ -50,7 +59,7 @@ pip install -r requirements.txt
 
 3. Set up your environment variables in the `.env` file:
 
-```
+```bash
 EMAIL="your_email"                        # for email where you want geenrated emails to go
 PASSWORD="your_temporary_google_password" # Contact me for this, it is called "passkey"
 OPENAI_API_KEY="your_openai_api_key"      # Contact me for help
@@ -87,14 +96,11 @@ python driver.py
 - **Email Tool**: Sends professional emails with a subject and body. Requires dictionary input with 'subject' and 'body'.
 - **Reminder Tool**: Creates a Google Calendar reminder using a simple format: 'title, date (YYYY-MM-DD), time (HH:MM), description, duration (minutes)'. Only the title is required.
 - **General LLM Fallback**: If the agent fails to find a solution using the available tools, it falls back to a default Language Learning Model (LLM) to process the query and provide a response.
+- **Camera Tool**: Captures images or video using the system's camera.
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
