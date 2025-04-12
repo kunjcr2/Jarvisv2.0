@@ -97,6 +97,7 @@ python driver.py
 - **Reminder Tool**: Creates a Google Calendar reminder using a simple format: 'title, date (YYYY-MM-DD), time (HH:MM), description, duration (minutes)'. Only the title is required.
 - **General LLM Fallback**: If the agent fails to find a solution using the available tools, it falls back to a default Language Learning Model (LLM) to process the query and provide a response.
 - **Camera Tool**: Captures images or video using the system's camera.
+- **File Writing Tool**: Creates or appends content to files in the workspace, with automatic file creation if it doesn't exist.
 
 ## Contributing
 
