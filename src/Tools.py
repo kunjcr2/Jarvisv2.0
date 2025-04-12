@@ -182,6 +182,29 @@ def get_pic(bool):
         return "Taken a picture successfully."
     else:
         return "Camera is not opened."
+def write_to_file(file):
+    """
+    Writes content to a file. If the file doesn't exist, it will create it. 
+    If it exists, it will append the content.
+    """
+    try:
+        file = ast.literal_eval(file)
+        filename, content = file[0], file[1]
+        filename = filename.replace(" ", "_")
+
+        filename = f'./files/{filename}'
+        if not os.path.exists(filename):
+
+            with open(filename, 'w') as f:
+                f.write(content + "\n")
+                return f"File '{filename}' did not exist, so it was created and content was written."
+        else:
+
+            with open(filename, 'a') as f:
+                f.write(content + "\n")
+                return f"Content was appended to the file '{filename}'."
+    except Exception as e:
+        return f"It didnt work."
 
 ####################################################################################################################
 
@@ -237,6 +260,11 @@ class ToolManager:
             description="Use ONLY for taking a picture, return True or False.",
             func=get_pic
         )
+        file_tool = Tool(
+            name="write_file",
+            description="Use ONLY to write to a file or 'save it', Return [filename, content]",
+            func=write_to_file
+        )
         
         return [
             wiki_tool, 
@@ -247,13 +275,15 @@ class ToolManager:
             weather_tool,
             email_tool,
             reminder_tool,
-            camera_tool
+            camera_tool,
+            file_tool
         ]
     def use_google(self, query):
         if self.google_used:
             return "Google search already used in this query."
         self.google_used = True
         return google_search(query)
+
     def use_web(self, query):
         if self.web_used:
             return "Google search already used in this query."
