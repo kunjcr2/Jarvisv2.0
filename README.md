@@ -98,6 +98,7 @@ python driver.py
 - **General LLM Fallback**: If the agent fails to find a solution using the available tools, it falls back to a default Language Learning Model (LLM) to process the query and provide a response.
 - **Camera Tool**: Captures images or video using the system's camera.
 - **File Writing Tool**: Creates or appends content to files in the workspace, with automatic file creation if it doesn't exist.
+- **Screenshot Tool**: A new tool has been added to take screenshots using the `pyautogui` library. This tool saves screenshots with a timestamped filename in the `screenshots` directory. To use this tool, ensure the `pyautogui` library is installed (already included in `requirements.txt`).
 
 ## Contributing
 

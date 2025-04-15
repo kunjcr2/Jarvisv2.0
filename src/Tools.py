@@ -25,6 +25,9 @@ import random
 import os
 from dotenv import load_dotenv
 
+# pyautogui for screenshots
+import pyautogui
+
 # Load environment variables
 load_dotenv()
 
@@ -205,6 +208,30 @@ def write_to_file(file):
                 return f"Content was appended to the file '{filename}'."
     except Exception as e:
         return f"It didnt work."
+    
+def take_screenshot(save_directory="images"):
+    """
+    Takes a screenshot and saves it to the specified directory with a timestamped filename.
+
+    Args:
+        save_directory (str): The directory where the screenshot will be saved. Defaults to 'screenshots'.
+
+    Returns:
+        str: The file path of the saved screenshot.
+    """
+    # Ensure the save directory exists
+    if not os.path.exists(save_directory):
+        os.makedirs(save_directory)
+
+    # Generate a timestamped filename
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    file_path = os.path.join(save_directory, f"screenshot_{timestamp}.png")
+
+    # Take the screenshot and save it
+    screenshot = pyautogui.screenshot()
+    screenshot.save(file_path)
+
+    return file_path
 
 ####################################################################################################################
 
@@ -265,6 +292,11 @@ class ToolManager:
             description="Use ONLY to write to a file or 'save it', Return [filename, content]",
             func=write_to_file
         )
+        screenshot_tool = Tool(
+            name="Screenshot",
+            description="Use ONLY for taking a screenshot and saving it with a timestamped filename.",
+            func=take_screenshot
+        )
         
         return [
             wiki_tool, 
@@ -276,7 +308,8 @@ class ToolManager:
             email_tool,
             reminder_tool,
             camera_tool,
-            file_tool
+            file_tool,
+            screenshot_tool
         ]
     def use_google(self, query):
         if self.google_used:
