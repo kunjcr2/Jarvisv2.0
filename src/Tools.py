@@ -4,6 +4,7 @@ import requests
 import webbrowser
 from langchain.agents import Tool
 from youtubesearchpython import VideosSearch
+import googlesearch as search
 
 # Email support
 import smtplib
@@ -44,8 +45,14 @@ def google_search(query):
     '''
     Used for google searching
     '''
-    res = kit.search(query)
-    return res
+    for i in range(1):
+        for i in search(query, num_results=1):
+            link = i
+            break
+
+    webbrowser.open(link)
+    return "Opened it on the browser. JOB DONE."
+
 def get_yt(query):
     search = VideosSearch(query, limit = 1)
     results = search.result()
