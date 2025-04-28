@@ -1,6 +1,6 @@
 # Jarvis v2.0
 
-A voice-controlled AI assistant that can perform various tasks through natural language commands.
+> Voice activated assistant using AI Agent and tools to do various tasks
 
 ## Overview
 
